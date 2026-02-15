@@ -1,17 +1,19 @@
 package changerequest
 
-import "context"
+import (
+	"context"
 
-type Repository interface {
-	Ping(ctx context.Context) error
+	usecase "github.com/ni4kaoyou-byte/shift-manager/apps/api/internal/usecase/change_request"
+)
+
+type MemoryStore struct{}
+
+func New() *MemoryStore {
+	return &MemoryStore{}
 }
 
-type InMemoryRepository struct{}
-
-func NewInMemoryRepository() *InMemoryRepository {
-	return &InMemoryRepository{}
-}
-
-func (r *InMemoryRepository) Ping(_ context.Context) error {
+func (s *MemoryStore) Ping(_ context.Context) error {
 	return nil
 }
+
+var _ usecase.Store = (*MemoryStore)(nil)

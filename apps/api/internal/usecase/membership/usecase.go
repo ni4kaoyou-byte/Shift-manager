@@ -1,19 +1,19 @@
 package membership
 
-import (
-	"context"
+import "context"
 
-	repository "github.com/ni4kaoyou-byte/shift-manager/apps/api/internal/repository/membership"
-)
-
-type Usecase struct {
-	repo repository.Repository
+type Store interface {
+	Ping(ctx context.Context) error
 }
 
-func NewUsecase(repo repository.Repository) *Usecase {
-	return &Usecase{repo: repo}
+type Service struct {
+	store Store
 }
 
-func (u *Usecase) Ping(ctx context.Context) error {
-	return u.repo.Ping(ctx)
+func New(store Store) *Service {
+	return &Service{store: store}
+}
+
+func (s *Service) Ping(ctx context.Context) error {
+	return s.store.Ping(ctx)
 }

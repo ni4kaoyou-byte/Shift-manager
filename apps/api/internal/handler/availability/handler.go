@@ -4,15 +4,16 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	commonhandler "github.com/ni4kaoyou-byte/shift-manager/apps/api/internal/handler"
 	usecase "github.com/ni4kaoyou-byte/shift-manager/apps/api/internal/usecase/availability"
 )
 
 type Handler struct {
-	usecase *usecase.Usecase
+	service *usecase.Service
 }
 
-func NewHandler(usecase *usecase.Usecase) *Handler {
-	return &Handler{usecase: usecase}
+func NewHandler(service *usecase.Service) *Handler {
+	return &Handler{service: service}
 }
 
 func (h *Handler) RegisterRoutes(apiV1 *gin.RouterGroup) {
@@ -21,8 +22,8 @@ func (h *Handler) RegisterRoutes(apiV1 *gin.RouterGroup) {
 }
 
 func (h *Handler) ping(c *gin.Context) {
-	if err := h.usecase.Ping(c.Request.Context()); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
+	if err := h.service.Ping(c.Request.Context()); err != nil {
+		commonhandler.AbortInternalServerError(c, err)
 		return
 	}
 
