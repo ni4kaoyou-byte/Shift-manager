@@ -1,0 +1,103 @@
+# Shift Manager
+
+飲食店向けシフト管理SaaS（個人開発MVP）の設計・実装リポジトリです。  
+MVPの目的は「希望回収 → 作成 → 公開 → 変更対応」を破綻なく回すことです。
+
+## 現在の状態
+
+- ドキュメント主導で仕様/設計を整備中
+- 実装方針
+  - API先行（Go）
+  - 画面は実API接続で並行実装（React）
+  - 縦スライス順で完成させる
+
+## ドキュメント
+
+- 入口: `docs/00_index.md`
+- 要件: `docs/02_requirements.md`
+- 技術スタック: `docs/03_tech-stack.md`
+- アーキテクチャ: `docs/06_architecture.md`
+- 実装バックログ: `docs/07_backlog.md`
+- 開発規約: `docs/08_dev-conventions.md`
+- テスト戦略: `docs/10_testing.md`
+
+## リポジトリ構成（目標）
+
+```txt
+shift-manager/
+  apps/
+    api/        # Go (gin + sqlc)
+    web/        # React (Vite)
+  db/
+    migrations/
+    schema.sql
+  docs/
+```
+
+## 環境構築（現時点）
+
+このリポジトリは現在、実装準備段階です。  
+先にドキュメント確認とDB定義確認を行ってください。
+
+1. リポジトリを取得
+```bash
+git clone https://github.com/ni4kaoyou-byte/Shift-manager.git
+cd Shift-manager
+```
+
+2. ドキュメントを確認
+```bash
+cat docs/00_index.md
+```
+
+3. DB定義を確認
+```bash
+ls db/migrations
+cat db/schema.sql
+```
+
+## 環境構築（実装開始後の予定）
+
+以下は `apps/api` `apps/web` 作成後に運用する手順です。
+
+1. 必須ツールを準備
+- Go 1.23+
+- Node.js 20+
+- npm 10+
+- PostgreSQLクライアント（必要に応じて）
+
+2. 環境変数を作成
+```bash
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env
+```
+
+3. DB migration適用
+```bash
+# 実行方法は今後 Makefile / scripts に統一
+```
+
+4. API起動
+```bash
+cd apps/api
+make run
+```
+
+5. Web起動
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+
+## 開発ルール（抜粋）
+
+- `main` 直push禁止、必ずブランチ + PR
+- コミットメッセージは日本語
+- フロントは `ESLint + Prettier` 必須
+- 仕様変更時は docs/ADR を先に更新
+
+## ライセンス
+
+未定
+
