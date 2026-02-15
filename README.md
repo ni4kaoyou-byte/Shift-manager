@@ -99,21 +99,38 @@ APIの必須環境変数（未設定だと起動時にエラー）
 
 3. DB migration適用
 ```bash
-# 実行方法は今後 Makefile / scripts に統一
+cd apps/api
+export DATABASE_URL='postgres://postgres:postgres@localhost:5432/shift_manager?sslmode=disable'
+make db-up
 ```
 
-4. API起動
+4. sqlcコード生成
+```bash
+cd apps/api
+make sqlc-generate
+```
+
+5. API起動
 ```bash
 cd apps/api
 make run
 ```
 
-5. Web起動
+6. Web起動
 ```bash
 cd apps/web
 npm install
 npm run dev
 ```
+
+## DB運用ルール（BL-004）
+
+- DBスキーマ変更は `db/migrations/*.sql` を正本として追加する
+- migrationを追加/変更したら `db/schema.sql` も必ず同期する
+- 同期後に `cd apps/api && make sqlc-generate` を実行する
+- PR前チェック
+  - migration適用手順がREADMEと一致している
+  - `make sqlc-generate` が成功する
 
 ## よく使うコマンド
 
