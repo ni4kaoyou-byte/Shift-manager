@@ -99,11 +99,30 @@
 ## 6. 品質規約（Lint/Format）
 
 - フロントは `ESLint + Prettier` 必須
-- Goは `gofmt`/`go vet` を必須
+- Goは `goimports + golangci-lint + go test` を必須
 - PR前チェック
+  - format通過
   - lint通過
   - test通過
   - 主要フローの手動確認
+
+### 実行コマンド（必須）
+
+- API（`apps/api`）
+  - `make fmt`
+  - `make lint`
+  - `make test`
+- Web（`apps/web`）
+  - `npm run format`
+  - `npm run lint`
+  - `npm run test`
+  - `npm run build`
+
+### 設定ファイルの正本
+
+- Go lint設定: `apps/api/.golangci.yml`
+- Web lint設定: `apps/web/eslint.config.js`
+- Web format設定: `apps/web/.prettierrc.json`
 
 ---
 
