@@ -3,8 +3,11 @@ MAIN_PKG := ./cmd/server
 GO_BIN := $(shell go env GOPATH)/bin
 GOIMPORTS := $(shell command -v goimports 2>/dev/null || echo $(GO_BIN)/goimports)
 GOLANGCI_LINT := $(shell command -v golangci-lint 2>/dev/null || echo $(GO_BIN)/golangci-lint)
+SQLC := $(shell command -v sqlc 2>/dev/null || echo $(GO_BIN)/sqlc)
+PSQL := $(shell command -v psql 2>/dev/null || echo psql)
+DB_MIGRATIONS_DIR := ../../db/migrations
 
-.PHONY: run build test test-ci lint fmt tidy tools vet
+.PHONY: run build test test-ci lint fmt tidy tools vet db-up db-down sqlc-generate
 
 run:
 	go run $(MAIN_PKG)
@@ -38,3 +41,21 @@ tidy:
 tools:
 	go install golang.org/x/tools/cmd/goimports@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
+db-up:
+	@test -n "$(DATABASE_URL)" || (echo "DATABASE_URL is required" && exit 1)
+	@for f in $$(find $(DB_MIGRATIONS_DIR) -name '*.up.sql' | sort); do \
+		echo "Applying $$f"; \
+		$(PSQL) "$(DATABASE_URL)" -v ON_ERROR_STOP=1 -f "$$f"; \
+	done
+
+db-down:
+	@test -n "$(DATABASE_URL)" || (echo "DATABASE_URL is required" && exit 1)
+	@for f in $$(find $(DB_MIGRATIONS_DIR) -name '*.down.sql' | sort -r); do \
+		echo "Applying $$f"; \
+		$(PSQL) "$(DATABASE_URL)" -v ON_ERROR_STOP=1 -f "$$f"; \
+	done
+
+sqlc-generate:
+	$(SQLC) generate -f sqlc.yaml
