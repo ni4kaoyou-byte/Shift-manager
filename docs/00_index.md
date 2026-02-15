@@ -32,7 +32,10 @@
 8. `docs/08_dev-conventions.md`  
    Git/PR、実装規約、品質規約、DoD
 
-9. `docs/10_testing.md`  
+9. `docs/09_go-review-checklist.md`  
+   Go APIレビュー観点（軽量クリーン前提チェックリスト）
+
+10. `docs/10_testing.md`  
    テスト戦略、E2E必須シナリオ、リリース前チェック
 
 ---

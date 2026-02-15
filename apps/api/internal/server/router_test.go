@@ -47,3 +47,44 @@ func TestAPIV1BaseRoute(t *testing.T) {
 		t.Fatalf("expected status %d, got %d", http.StatusOK, rec.Code)
 	}
 }
+
+func TestModuleRoutes(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		path   string
+		module string
+	}{
+		{path: "/api/v1/auth/ping", module: "auth"},
+		{path: "/api/v1/membership/ping", module: "membership"},
+		{path: "/api/v1/period/ping", module: "period"},
+		{path: "/api/v1/availability/ping", module: "availability"},
+		{path: "/api/v1/assignment/ping", module: "assignment"},
+		{path: "/api/v1/change-requests/ping", module: "change_request"},
+		{path: "/api/v1/audit-logs/ping", module: "audit_log"},
+	}
+
+	router := NewRouter()
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.path, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodGet, tc.path, nil)
+			rec := httptest.NewRecorder()
+
+			router.ServeHTTP(rec, req)
+
+			if rec.Code != http.StatusOK {
+				t.Fatalf("expected status %d, got %d", http.StatusOK, rec.Code)
+			}
+
+			var body map[string]string
+			if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil {
+				t.Fatalf("failed to decode response: %v", err)
+			}
+
+			if body["module"] != tc.module {
+				t.Fatalf("expected module %q, got %q", tc.module, body["module"])
+			}
+		})
+	}
+}

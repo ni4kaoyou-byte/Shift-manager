@@ -123,6 +123,7 @@
 
 - 優先度: P0
 - 種別: API
+- 状態: Done（2026-02-15）
 - 依存: BL-005
 - 内容
   - 下記モジュールの `handler/usecase/repository` 雛形作成

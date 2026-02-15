@@ -15,7 +15,10 @@ func Recover() gin.HandlerFunc {
 			Any("panic", recovered).
 			Msg("panic recovered")
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": "internal server error",
+			"error": gin.H{
+				"code":    "internal_error",
+				"message": "internal server error",
+			},
 		})
 	})
 }
