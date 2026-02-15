@@ -14,6 +14,7 @@ func NewRouter() *gin.Engine {
 		middleware.Logging(),
 		middleware.Recover(),
 	)
+	moduleHandlers := newModuleHandlers()
 
 	router.GET("/healthz", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
@@ -23,6 +24,7 @@ func NewRouter() *gin.Engine {
 	apiV1.GET("", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "api v1"})
 	})
+	moduleHandlers.RegisterRoutes(apiV1)
 
 	return router
 }
