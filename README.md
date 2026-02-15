@@ -21,13 +21,27 @@ MVPの目的は「希望回収 → 作成 → 公開 → 変更対応」を破�
 - 開発規約: `docs/08_dev-conventions.md`
 - テスト戦略: `docs/10_testing.md`
 
-## リポジトリ構成（目標）
+## リポジトリ構成（BL-001時点）
 
 ```txt
 shift-manager/
   apps/
-    api/        # Go (gin + sqlc)
-    web/        # React (Vite)
+    api/                        # Go API
+      cmd/
+        server/
+      internal/
+        domain/
+        usecase/
+        handler/
+        repository/
+        infrastructure/
+        middleware/
+        config/
+    web/                        # React
+      src/
+        app/
+        features/
+        shared/
   db/
     migrations/
     schema.sql
@@ -56,9 +70,9 @@ ls db/migrations
 cat db/schema.sql
 ```
 
-## 環境構築（実装開始後の予定）
+## 環境構築（実装フェーズ）
 
-以下は `apps/api` `apps/web` 作成後に運用する手順です。
+以下は実装フェーズで運用する手順です。
 
 1. 必須ツールを準備
 - Go 1.23+
@@ -100,4 +114,3 @@ npm run dev
 ## ライセンス
 
 未定
-
