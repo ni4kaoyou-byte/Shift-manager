@@ -1,0 +1,44 @@
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - govet
+    - staticcheck
+    - errcheck
+    - ineffassign
+    - unused
+    - typecheck
+    - gosimple
+    - errorlint
+    - bodyclose
+    - gosec
+    - unparam
+    - revive
+    - misspell
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  revive:
+    severity: error
+    rules:
+      - name: exported
+      - name: var-naming
+      - name: error-strings
+      - name: errorf
+      - name: if-return
+
+issues:
+  # テストはゆるゆるに（ノイズを減らす）
+  exclude-rules:
+    - path: ".*_test\\.go"
+      linters:
+        - errcheck
+        - gosec
+        - bodyclose
+        - unparam
+        - revive
+        - errorlint

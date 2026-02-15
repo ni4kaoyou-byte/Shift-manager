@@ -7,7 +7,7 @@ describe("App", () => {
     render(
       <MemoryRouter>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Shift Manager")).toBeInTheDocument();
