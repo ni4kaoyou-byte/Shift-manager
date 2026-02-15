@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# React app artifacts
+apps/web/node_modules/
+apps/web/dist/
+apps/web/coverage/
+apps/web/playwright-report/
+apps/web/test-results/
+apps/web/*.tsbuildinfo
+
+# Go artifacts
+apps/api/bin/
