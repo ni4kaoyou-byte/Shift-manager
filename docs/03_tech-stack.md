@@ -25,6 +25,7 @@
 - `TanStack Query`（サーバ状態）
 - `React Hook Form + Zod`（入力/バリデーション）
 - `Tailwind CSS`（UIスタイリング）
+- `ESLint + Prettier`（静的解析/フォーマット）
 
 ### バックエンド
 
@@ -103,6 +104,7 @@
 - APIは`/api/v1`配下でバージョニング
 - 監査ログ（変更履歴）は公開後変更で必ず記録（削除APIは作らない）
 - 通知は初期はアプリ内通知を優先（メールは後追い）
+- フロントコードは `ESLint + Prettier` を必須化し、PR前に整形/lintを通す
 
 ---
 
