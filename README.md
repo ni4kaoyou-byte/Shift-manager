@@ -92,6 +92,11 @@ cp apps/api/.env.example apps/api/.env
 cp apps/web/.env.example apps/web/.env
 ```
 
+APIの必須環境変数（未設定だと起動時にエラー）
+- `DATABASE_URL`
+- `SUPABASE_URL`
+- `SUPABASE_JWT_SECRET`
+
 3. DB migration適用
 ```bash
 # 実行方法は今後 Makefile / scripts に統一
