@@ -135,6 +135,7 @@
 
 - 優先度: P0
 - 種別: Web
+- 状態: Done（2026-02-16）
 - 依存: BL-002
 - 内容
   - `app/features/shared` のfeature-based構造作成
@@ -173,8 +174,12 @@
 - 内容
   - Supabase JWT検証
   - ロール/所属を返す `/api/v1/me`
+  - トークン運用を以下へ移行
+    - Access Token: Webメモリ保持（`localStorage` / `sessionStorage` は使わない）
+    - Refresh Token: `HttpOnly` Cookie（`Secure` + `SameSite` 前提）
 - 受け入れ条件
   - 未ログイン401、ログイン済みでユーザー情報を返す
+  - Access Token がストレージに永続化されない
 
 ### BL-102 Web: ログイン画面（実接続）
 
@@ -185,8 +190,10 @@
 - 内容
   - ログインフォーム実装
   - ログイン後 `/me` 取得でロール別遷移
+  - BL-101のトークン方針（Access Tokenメモリ保持 / Refresh Token Cookie）に準拠
 - 受け入れ条件
   - 正常ログイン/失敗時エラー表示/保護ルート制御
+  - `localStorage` にトークン保存しない
 
 ### Flow 2: 参加（Membership/Invite）
 
